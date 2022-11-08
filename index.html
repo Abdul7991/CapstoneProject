@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>  
+<script>
+    $(document).ready(function(){
+        $("#postcode_lookup_frm").on('submit', function(e){
+        e.preventDefault();
+        var postcode = $("#postcode_search").val();
+        var url_to_query = "https://f3g9j9gx40.execute-api.us-east-1.amazonaws.com/capstone?postcode=" + postcode
+
+        $.get(url_to_query, function(data, status){
+            console.log(data, status)
+            data = JSON.parse(data)
+
+            const constituency = data.parliamentary_constituency
+            const planningPermissions = data.planning_permissions
+            const crimeStats = data.criminal_activity
+            const nearbyPostcodes = data.nearby_postcodes
+
+        $('#cons').html(`<p>${constituency}</p>`)
+
+            const npResult = nearbyPostcodes.map((item) => {
+                return `<p>${item}</p>
+                `;
+            }).join('');
+        
+        $('#near_pc').html(npResult)
+
+            const crimeResult = crimeStats.map((item) => {
+              return `<p>${item[0]}, <span>${item[1]}</span>, <span>${item[2]}</span> </p>
+              `;
+            }).join('');
+
+        $('#criminal_activity').html(crimeResult)
+
+            const ppResult = planningPermissions.map((item) => {
+                return `<p>${item}</p>
+                `;
+            }).join('');
+
+
+        $('#planning_permission').html(ppResult)
+
+        });
+
+    });
+
+});
+</script>
+<style>
+    body {
+        background-color: black;
+    }
+    form input{
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+    }
+    #postcode_lookup_frm_div{
+        background-color: aquamarine;
+        font-weight: 1000;
+        font-size: larger;
+    }
+    #Results{
+        padding: 1rem;
+        width: 50%;
+        font-size: small;
+        font-weight: 200;
+        background-color: teal;
+    }
+    .label_box {
+        padding: 0.3rem;
+        font-size: medium;
+        font-weight: 200;
+        background-color: rgb(196, 196, 196);
+    }
+</style>
+</head>
+<body>
+<center>
+<div id="postcode_lookup_frm_div">
+    <br />
+    <u id="postcode_seach_text">Postcode Search:</u>
+    <form id="postcode_lookup_frm" action="" method="post">
+    <br />
+    <br />
+    <input id="postcode_search" type="text" name="postcode" placeholder="EG.NW64PG" />
+    <br />
+    <br />
+    <input id="postcode_submit" type="Submit" value="Search" />
+</div>
+
+<div id="Results">
+    <div id="Results_1">
+        <p><label class="label_box">Constituency Result</label></p>
+        <div id="cons"></div>
+    <span class="span_box" id="constituency_result"></span>    
+    </div>
+
+    <div id="Results_2">
+        <p><label class="label_box">Nearby Postcodes</label></p>
+        <div id="near_pc"></div>
+    <span class="span_box" id="np_result"></span>    
+    </div>
+
+    <div id="Results_3">
+        <p><label class="label_box">Crime Data</label></p>
+        <div id="criminal_activity"></div>
+    <span class="span_box" id="crime_result"></span>    
+    </div>
+
+    <div id="Results_2">
+        <p><label class="label_box">Planning Permissions</label></p>
+        <div id="planning_permission"></div>
+    <span class="span_box" id="pp_result"></span>    
+    </div>
+</div>
+</center>
+</body>
+</html>

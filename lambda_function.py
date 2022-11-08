@@ -99,10 +99,10 @@ def lambda_handler(event, context):
         print('Error: {}'.format(e))
 
     #for item in nearby_pc:
-        #cur.execute("INSERT IGNORE INTO nearest_postcode (crime_stats, category, area, outcome, pid) VALUES (%s, %s)", (pp_list[0], pp_list[1]))
+        #cur.execute("INSERT IGNORE INTO nearest_postcode (planning_permissions, category, area, outcome, pid) VALUES (%s, %s)", (pp_list[0], pp_list[1]))
         #The function above only executes one postcode to be inserted into the database
             #By changing the secondary nearby_pc we are able to inserted the other nearby postcodes into the database as demonstrated below:
-            #("INSERT IGNORE INTO nearest_postcode (nearest_postcode, pid) VALUES (%s, %s)", (pp_list[0], pp_list[2-9]))
+            #("INSERT IGNORE INTO nearest_postcode (planning_permissions, uniqueID, description, app_size, app_state, app_type, pid) VALUES (%s, %s)", (pp_list[0], pp_list[2-4]))
     
     #Body is used to store the results gathered from the individual API calls as demonstrated below:
     

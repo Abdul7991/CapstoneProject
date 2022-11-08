@@ -1,0 +1,3 @@
+
+The link to my database is glitched due to an issue with mySQLWorkbench not allowing foreign keys to be associated across the different tables
+This bug has been reported to Hari and he has advised that the submission go through noting that this will be taken into account.
